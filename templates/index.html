@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>restaurant</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body style="background-image: url('{% static 'css/bg.jpg' %}');">
+<div class="app">
+
+    <div class="title">餐 馆 预 约 系 统</div>
+    <div class="time">
+        <label for="time-type" class="time-type">Date:</label>
+        <input type="date" id="time-type" value="{{ time }}">
+    </div>
+    <div class="content">
+        <div class="left-con">
+            <div class="table">table</div>
+            {% for table in tables %}
+                <div class="table">{{ table.id }}</div>
+            {% endfor %}
+        </div>
+        <div class="right-con">
+            <div class="moment">
+                <div class="moments">18:00</div>
+                <div class="moments">18:30</div>
+                <div class="moments">19:00</div>
+                <div class="moments">19:30</div>
+                <div class="moments">20:00</div>
+                <div class="moments">20:30</div>
+                <div class="moments">21:00</div>
+                <div class="moments">21:30</div>
+                <div class="moments">22:00</div>
+                <div class="moments">22:30</div>
+                <div class="moments">23:00</div>
+            </div>
+            <div class="block">
+                {% for row in set_list %}
+                    <div class="block-row">
+                        {% for i in row %}
+                            <div class="blocks {% if i == 1 %}set_color{% endif %} "></div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="button-bar">
+        <button class="btn order">预约</button>
+        <button class="btn cancel-order">取消预约</button>
+        <button class="btn change">换桌</button>
+        <button class="btn eat">就餐</button>
+    </div>
+    <div class="window click-order">
+        <div class="item" id="name">
+            <label for="order-item-name">姓名</label>
+            <input type="text" id="order-item-name" class="order-item" placeholder="请输入你的姓名">
+        </div>
+
+        <div class="item phone">
+            <label for="order-item-phoen">手机号</label>
+            <input type="text" id="order-item-phone" class="order-item" placeholder="请输入你的手机号">
+        </div>
+        <div class="item">
+            <label for="order-item-num">用餐人数</label>
+            <select id="order-item-num" class="order-item-select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+        <div class="item">
+            <label for="order-item-day-tiem">日期</label>
+            <input type="date" id="order-day-time" class="order-item" placeholder="请输入预约日期">
+        </div>
+        <div class="item">
+            <label for="order-item-arrival-tiem">到达时间</label>
+            <select id="order-item-arrival-tiem" class="order-item-select">
+                <option value="18:00">18:00</option>
+                <option value="18:30">18:30</option>
+                <option value="19:00">19:00</option>
+                <option value="19:30">19:30</option>
+                <option value="20:00">20:00</option>
+                <option value="20:30">20:30</option>
+                <option value="21:00">21:00</option>
+                <option value="21:30">21:30</option>
+                <option value="22:00">22:00</option>
+                <option value="22:30">22:30</option>
+                <option value="23:00">23:00</option>
+                <option value="23:30">23:30</option>
+            </select>
+        </div>
+
+        <div class="item">
+            <label for="order-item-leave-time">用餐时长</label>
+            <select id="order-item-leave-time" class="order-item-select">
+                <option value="0.5">0.5</option>
+                <option value="1">1</option>
+                <option value="1.5">1.5</option>
+                <option value="2">2</option>
+                <option value="2.5">2.5</option>
+                <option value="3">3</option>
+                <option value="3.5">3.5</option>
+                <option value="4">4</option>
+            </select>
+
+        </div>
+        <div class="item">
+            <label for="order-item-table">餐桌号</label>
+             <select id="order-item-table" class="order-item-select">
+                 {% for table in tables %}
+                     <option value="{{ table.id }}">{{ table.id }}</option>
+                 {% endfor %}
+            </select>
+
+        </div>
+        <div class="item button-item">
+            <button class="order_submit btn">预约</button>
+            <button class="abandon btn">放弃</button>
+        </div>
+    </div>
+    <div class="window click-cancel">
+        <div class="item" id="name">
+            <label for="cancel-item-name">姓名</label>
+            <input type="text" id="cancel-item-name" class="order-item" placeholder="请输入姓名：">
+        </div>
+        <div class="item">
+            <label for="cancel-item-day">日期</label>
+            <input type="date" id="cancel-item-day" class="order-item-select" placeholder="请输入日期：">
+        </div>
+
+        <div class="item button-item">
+            <button class="cancel_submit btn">确定取消</button>
+            <button class="abandon btn">放弃</button>
+        </div>
+    </div>
+    <div class="window click-change">
+        <div class="item" id="name">
+            <label for="change-item-name">姓名</label>
+            <input type="text" id="change-item-name" class="order-item" placeholder="请输入你的姓名">
+        </div>
+        <div class="item">
+            <label for="change-item-day">日期</label>
+            <input type="date" id="chage-item-new-day" class="order-item-select" placeholder="请输入你选择的餐桌号">
+        </div>
+        <div class="item">
+            <label for="change-item-new-table">新餐桌</label>
+            <select id="chage-item-new-table" class="order-item-select">
+                 {% for table in tables %}
+                     <option value="{{ table.id }}">{{ table.id }}</option>
+                 {% endfor %}
+            </select>
+        </div>
+        <div class="item button-item">
+            <button class="change_submit btn">确定换桌</button>
+            <button class="abandon btn">放弃</button>
+        </div>
+    </div>
+
+    <div class="window click-dinner">
+        <div class="item" id="name">
+            <label for="dinner-item-name">姓名</label>
+            <input type="text" id="dinner-item-name" class="order-item" placeholder="请输入你的姓名">
+        </div>
+        <div class="item phone">
+            <label for="dinner-item-phoen">手机号</label>
+            <input type="text" id="dinner-item-phone" class="order-item" placeholder="请输入你的手机号">
+        </div>
+        <div class="item num">
+            <label for="dinner-item-num">用餐人数</label>
+            <select id="dinner-item-num" class="order-item-select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+        <div class="item">
+            <label for="dinner-item-arrival-tiem">到达时间</label>
+            <select id="dinner-item-arrival-tiem" class="order-item-select">
+                <option value="18:00">18:00</option>
+                <option value="18:30">18:30</option>
+                <option value="19:00">19:00</option>
+                <option value="19:30">19:30</option>
+                <option value="20:00">20:00</option>
+                <option value="20:30">20:30</option>
+                <option value="21:00">21:00</option>
+                <option value="21:30">21:30</option>
+                <option value="22:00">22:00</option>
+                <option value="22:30">22:30</option>
+                <option value="23:00">23:00</option>
+                <option value="23:30">23:30</option>
+            </select>
+
+        </div>
+        <div class="item">
+            <label for="dinner-item-leave-time">用餐时长</label>
+            <select id="dinner-item-leave-time" class="order-item-select">
+                <option value="0.5">0.5</option>
+                <option value="1">1</option>
+                <option value="1.5">1.5</option>
+                <option value="2">2</option>
+                <option value="2.5">2.5</option>
+                <option value="3">3</option>
+                <option value="3.5">3.5</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+        <div class="item">
+            <label for="dinner-item-table">餐桌号</label>
+            <select id="dinner-item-table" class="order-item-select">
+                 {% for table in tables %}
+                     <option value="{{ table.id }}">{{ table.id }}</option>
+                 {% endfor %}
+            </select>
+        </div>
+        <div class="item button-item">
+            <button class="dinner_submit btn">就坐</button>
+            <button class="abandon btn">离开</button>
+        </div>
+    </div>
+    <div class="footer">
+      Designed by clong & bryna
+    </div>
+</div>
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/index.js' %}"></script>
+
+<script type="application/javascript">
+
+    //默认显示今天的时间
+
+    var t = $('#time-type').val();
+
+    console.log(t);
+
+    $('#time-type').change(function () {
+        $.ajax({
+            cache: true,
+            type: "POST",
+            url: "{% url "index" %}",
+            data: {'date': $('#time-type').val()},
+            async: true,
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            success: function (res) {
+
+                var t = res.date;
+                console.log(t);
+                window.location = "../index?date=" + t;
+            }
+        });
+    })
+</script>
+</body>
+</html>
